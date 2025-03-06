@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,7 +17,9 @@ public class PlayerController : MonoBehaviour
     private float camCurXRot;
     public float lookSensitivity;
     private Vector2 mouseDelta;
+    public bool canLook = true;
 
+    public Action inventory;
     private Rigidbody rb;
 
     private void Awake()
@@ -38,7 +41,10 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        CameraLook();
+        if (canLook)
+        {
+            CameraLook();
+        }
     }
     void Move()
     {
@@ -59,11 +65,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed)
+        if (context.phase == InputActionPhase.Performed)
         {
             curMovementInput = context.ReadValue<Vector2>();
         }
-        else if(context.phase == InputActionPhase.Canceled)
+        else if (context.phase == InputActionPhase.Canceled)
         {
             curMovementInput = Vector2.zero;
         }
@@ -72,7 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         mouseDelta = context.ReadValue<Vector2>();
     }
-    
+
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started && IsGrounded())
@@ -90,7 +96,7 @@ public class PlayerController : MonoBehaviour
             new Ray(transform.position + (transform.right *0.2f) + (transform.up * 0.01f), Vector3.down),
             new Ray(transform.position + (-transform.right *0.2f) + (transform.up * 0.01f), Vector3.down),
         };
-        for(int i = 0; i < rays.Length; i++)
+        for (int i = 0; i < rays.Length; i++)
         {
             if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
             {
@@ -98,5 +104,21 @@ public class PlayerController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void OnInventory(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            inventory?.Invoke();
+            ToggleCursor();
+        }
+    }
+
+    void ToggleCursor()
+    {
+        bool toggle = Cursor.lockState == CursorLockMode.Locked;
+        Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
+        canLook = !toggle;
     }
 }

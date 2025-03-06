@@ -503,7 +503,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 267077515}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1698697925}
+        m_TargetAssemblyTypeName: UIInventory, Assembly-CSharp
+        m_MethodName: OnUseButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &267077515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2147,6 +2159,37 @@ MonoBehaviour:
   maxValue: 100
   passiveValue: 1
   uiBar: {fileID: 1675417646}
+--- !u!1 &808455553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 808455554}
+  m_Layer: 6
+  m_Name: DropPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &808455554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808455553}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1414607883}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &840872890
 GameObject:
   m_ObjectHideFlags: 0
@@ -3545,6 +3588,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 769437030}
+  - {fileID: 808455554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1414607884
@@ -3671,7 +3715,19 @@ MonoBehaviour:
     m_ActionId: 673c5e1b-d6e7-4a9b-b7ec-40559c4ef6d7
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1414607887}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: e8d2f8c6-cde6-4684-b96d-40805693161a
     m_ActionName: Player/Inventory[/Keyboard/tab]
   - m_PersistentCalls:
@@ -3720,6 +3776,7 @@ MonoBehaviour:
   minXLook: -85
   maxXLook: 85
   lookSensitivity: 0.2
+  canLook: 1
 --- !u!114 &1414607888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3735,6 +3792,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   condition: {fileID: 0}
   itemData: {fileID: 0}
+  dropItemPosition: {fileID: 808455554}
 --- !u!114 &1414607889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4814,6 +4872,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80fa1c07e8e9404dac6ba4a6a4865ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slots: []
+  inventoryWindow: {fileID: 1698697920}
+  slotPanel: {fileID: 1482399225}
+  dropPosition: {fileID: 0}
+  selectedItemName: {fileID: 1607218266}
+  selectedItemDescription: {fileID: 1648941107}
+  selectedStatName: {fileID: 285674912}
+  selectedStatValue: {fileID: 539165301}
+  useButton: {fileID: 267077512}
+  equipButton: {fileID: 102086057}
+  unequipButton: {fileID: 1257120656}
+  dropButton: {fileID: 1886154214}
 --- !u!1 &1845634569
 GameObject:
   m_ObjectHideFlags: 0
@@ -5030,7 +5100,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1886154217}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1698697925}
+        m_TargetAssemblyTypeName: UIInventory, Assembly-CSharp
+        m_MethodName: OnDropButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1886154217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5462,17 +5544,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6030272145954006224, guid: 728ef69059ff6c544be6766f8ff1ea07, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 7774340142386767283, guid: 728ef69059ff6c544be6766f8ff1ea07, type: 3}
       propertyPath: m_Name
       value: Item_Sword
-      objectReference: {fileID: 0}
-    - target: {fileID: 7774340142386767283, guid: 728ef69059ff6c544be6766f8ff1ea07, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8202400035699386047, guid: 728ef69059ff6c544be6766f8ff1ea07, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5527,17 +5601,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 180668889450436648, guid: 9e3f4f493ef5399489d18243384d130c, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 3437334842070458044, guid: 9e3f4f493ef5399489d18243384d130c, type: 3}
       propertyPath: m_Name
       value: Item_Ax
-      objectReference: {fileID: 0}
-    - target: {fileID: 3437334842070458044, guid: 9e3f4f493ef5399489d18243384d130c, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4768735195373582141, guid: 9e3f4f493ef5399489d18243384d130c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5579,10 +5645,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7644471416516389099, guid: 9e3f4f493ef5399489d18243384d130c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5596,25 +5658,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2447441802689046263, guid: 8e4f4830fe14be84bbd041f3f6a900a3, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2447441802689046263, guid: 8e4f4830fe14be84bbd041f3f6a900a3, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4137927798198616111, guid: 8e4f4830fe14be84bbd041f3f6a900a3, type: 3}
       propertyPath: m_Name
       value: Item_Wood
-      objectReference: {fileID: 0}
-    - target: {fileID: 4137927798198616111, guid: 8e4f4830fe14be84bbd041f3f6a900a3, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6974034832969355854, guid: 8e4f4830fe14be84bbd041f3f6a900a3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7965994578917213602, guid: 8e4f4830fe14be84bbd041f3f6a900a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5669,25 +5715,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3164982212618238885, guid: aea1a432394ef0141ae00ab3f006a16a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6239818580435442762, guid: aea1a432394ef0141ae00ab3f006a16a, type: 3}
       propertyPath: m_Name
       value: Item_Rock
-      objectReference: {fileID: 0}
-    - target: {fileID: 6239818580435442762, guid: aea1a432394ef0141ae00ab3f006a16a, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6988222362088949064, guid: aea1a432394ef0141ae00ab3f006a16a, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6988222362088949064, guid: aea1a432394ef0141ae00ab3f006a16a, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8566490712936429252, guid: aea1a432394ef0141ae00ab3f006a16a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5742,10 +5772,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1130249141545181898, guid: 35c79bac0a8265640b3a625a5813a0db, type: 3}
-      propertyPath: m_Mass
-      value: 0.0000001
-      objectReference: {fileID: 0}
     - target: {fileID: 2122035933472993460, guid: 35c79bac0a8265640b3a625a5813a0db, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.17
@@ -5789,18 +5815,6 @@ PrefabInstance:
     - target: {fileID: 6367615837952604261, guid: 35c79bac0a8265640b3a625a5813a0db, type: 3}
       propertyPath: m_Name
       value: Item_Carrot
-      objectReference: {fileID: 0}
-    - target: {fileID: 6367615837952604261, guid: 35c79bac0a8265640b3a625a5813a0db, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6975799776934419984, guid: 35c79bac0a8265640b3a625a5813a0db, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7186459895554697852, guid: 35c79bac0a8265640b3a625a5813a0db, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
