@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    //public float speedBoostValue { get { return ItemDataBoostable.value; }
     public float jumpForce;
     private Vector2 curMovementInput;
     public LayerMask groundLayerMask;
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public bool canLook = true;
 
     public Action inventory;
+    public Action<float> ApplyBoost;
     private Rigidbody rb;
 
     private void Awake()
@@ -54,6 +57,19 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = dir;
     }
+
+
+    public IEnumerator SpeedBoostCoroutine(float speed, float duration)
+    {
+        moveSpeed += speed;
+        Debug.Log("속도 증가! 현재 속도: " + moveSpeed);
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed -= speed;
+        Debug.Log("속도아이템의 효과가 종료되었습니다. 현재 속도: " + moveSpeed);
+    }
+    
+
     void CameraLook()
     {
         camCurXRot += mouseDelta.y * lookSensitivity;

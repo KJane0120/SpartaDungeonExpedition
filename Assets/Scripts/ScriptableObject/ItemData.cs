@@ -9,10 +9,13 @@ public enum ItemType
     Resource,
 }
 
-public enum  ConsumableType
+public enum ConsumableType
 {
     Health,
     Hunger,
+    SpeedBoost,
+    JumpCount,
+    Invincibility
 }
 
 [Serializable]
@@ -38,7 +41,5 @@ public class ItemData : ScriptableObject
 
     [Header("Consumable")]
     public ItemDataConsumable[] consumables;
-
-
 
 }

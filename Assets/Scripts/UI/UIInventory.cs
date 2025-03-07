@@ -34,7 +34,7 @@ public class UIInventory : MonoBehaviour
         dropPosition = CharacterManager.Instance.Player.dropItemPosition;
 
         controller.inventory += Toggle;
-        CharacterManager.Instance.Player.addItem += AddItem; //왜 =이 아니라 +=인지? 다른 AddItem함수가 없는데
+        CharacterManager.Instance.Player.addItem += AddItem;
 
         inventoryWindow.SetActive(false);
         slots = new ItemSlot[slotPanel.childCount];
@@ -192,6 +192,9 @@ public class UIInventory : MonoBehaviour
                     case ConsumableType.Hunger:
                         condition.Eat(selectedItem.consumables[i].value);
                         break;
+                    case ConsumableType.SpeedBoost:
+                        condition.ApplySpeedBoost(selectedItem.consumables[i].value);
+                            break;
                 }
             }
             RemoveSelectedItem();

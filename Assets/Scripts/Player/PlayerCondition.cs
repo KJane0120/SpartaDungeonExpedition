@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerCondition : MonoBehaviour
 {
     public UICondition uiCondition;
+
+    public PlayerController controller;
 
     Condition health { get { return uiCondition.health; } }
     Condition hunger { get { return uiCondition.hunger; } }
@@ -12,6 +13,11 @@ public class PlayerCondition : MonoBehaviour
 
     public float noHungerHealthDecrease;
 
+    private void Start()
+    {
+        controller = CharacterManager.Instance.Player.controller;
+        controller.ApplyBoost += ApplySpeedBoost;
+    }
     void Update()
     {
         hunger.Subtract(hunger.passiveValue * Time.deltaTime);
@@ -42,4 +48,16 @@ public class PlayerCondition : MonoBehaviour
     {
         hunger.Add(amount);
     }
+
+    public void ApplySpeedBoost(float value)
+    {
+        StartCoroutine(controller.SpeedBoostCoroutine(value, 5));
+        //Invincibility의 경우 추후 추가 예정->데미지 로직 구현 후, 데미지 받는 부분에서 호출
+    }
+
+    //public void ApplyJumpCountBoost(float amount)
+    //{
+
+    //}
+
 }
