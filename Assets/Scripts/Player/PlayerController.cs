@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("속도아이템의 효과가 종료되었습니다. 현재 속도: " + moveSpeed);
         isDashing = false;
     }
-    
+
 
     void CameraLook()
     {
@@ -107,10 +107,13 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Started && isDashing == false)
+        if (context.phase == InputActionPhase.Started && isDashing == false)
         {
-            CharacterManager.Instance.Player.condition.UseStamina(15);
-            StartCoroutine(SpeedBoostCoroutine(dashForce,3));
+            if (context.control.displayName == "Shift")
+            {
+                CharacterManager.Instance.Player.condition.UseStamina(15);
+                StartCoroutine(SpeedBoostCoroutine(dashForce, 3));
+            }
         }
     }
 
