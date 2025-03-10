@@ -54,11 +54,6 @@ public class PlayerCondition : MonoBehaviour, IDamageable
         hunger.Add(amount);
     }
 
-    public void UseStamina(float amount)
-    {
-        stamina.Subtract(amount);
-    }
-
     public void ApplySpeedBoost(float value)
     {
         StartCoroutine(controller.SpeedBoostCoroutine(value, 10));
@@ -69,6 +64,15 @@ public class PlayerCondition : MonoBehaviour, IDamageable
     {
         health.Subtract(damage);
         onTakeDamage?.Invoke();
+    }
 
+    public bool UseStamina(float amount)
+    {
+        if(stamina.curValue - amount < 0f)
+        {
+            return false;
+        }
+        stamina.Subtract(amount);
+        return true;
     }
 }
