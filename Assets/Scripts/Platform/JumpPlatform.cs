@@ -18,7 +18,6 @@ public class JumpPlatform : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
                 rb.AddForce(Vector3.up * jumpValue, ForceMode.Impulse);
-
             }
         }
     }
