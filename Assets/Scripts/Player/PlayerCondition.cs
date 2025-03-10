@@ -16,7 +16,6 @@ public class PlayerCondition : MonoBehaviour
     private void Start()
     {
         controller = CharacterManager.Instance.Player.controller;
-        controller.ApplyBoost += ApplySpeedBoost;
     }
     void Update()
     {
@@ -51,13 +50,7 @@ public class PlayerCondition : MonoBehaviour
 
     public void ApplySpeedBoost(float value)
     {
-        StartCoroutine(controller.SpeedBoostCoroutine(value, 5));
+        StartCoroutine(controller.SpeedBoostCoroutine(value, 10));
         //Invincibility의 경우 추후 추가 예정->데미지 로직 구현 후, 데미지 받는 부분에서 호출
     }
-
-    //public void ApplyJumpCountBoost(float amount)
-    //{
-
-    //}
-
 }

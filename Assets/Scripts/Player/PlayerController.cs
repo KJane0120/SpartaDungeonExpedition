@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
-    //public float speedBoostValue { get { return ItemDataBoostable.value; }
     public float jumpForce;
     private Vector2 curMovementInput;
     public LayerMask groundLayerMask;
@@ -22,7 +21,6 @@ public class PlayerController : MonoBehaviour
     public bool canLook = true;
 
     public Action inventory;
-    public Action<float> ApplyBoost;
     private Rigidbody rb;
 
     private void Awake()

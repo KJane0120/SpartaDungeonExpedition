@@ -194,7 +194,7 @@ public class UIInventory : MonoBehaviour
                         break;
                     case ConsumableType.SpeedBoost:
                         condition.ApplySpeedBoost(selectedItem.consumables[i].value);
-                            break;
+                        break;
                 }
             }
             RemoveSelectedItem();
