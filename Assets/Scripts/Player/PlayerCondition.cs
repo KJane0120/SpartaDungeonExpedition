@@ -48,6 +48,11 @@ public class PlayerCondition : MonoBehaviour
         hunger.Add(amount);
     }
 
+    public void UseStamina(float amount)
+    {
+        stamina.Subtract(amount);
+    }
+
     public void ApplySpeedBoost(float value)
     {
         StartCoroutine(controller.SpeedBoostCoroutine(value, 10));

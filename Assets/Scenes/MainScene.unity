@@ -3747,9 +3747,37 @@ MonoBehaviour:
     m_ActionId: c1d136b1-3fe8-434b-b157-0ef54a7deeb4
     m_ActionName: Player/Interaction[/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1414607887}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 9aa920ab-460c-4d94-b42b-6dc15c7ff883
     m_ActionName: Player/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1414607887}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d8422ddd-991d-459d-afe7-0a46910ffa68
+    m_ActionName: Player/Dash[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3768,8 +3796,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 8
-  speedBoostValue: 0
   jumpForce: 100
+  dashForce: 5
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 55
@@ -3807,6 +3835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCondition: {fileID: 0}
+  controller: {fileID: 0}
   noHungerHealthDecrease: 2
 --- !u!114 &1414607890
 MonoBehaviour:

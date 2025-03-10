@@ -8,8 +8,10 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     public float jumpForce;
+    public float dashForce;
     private Vector2 curMovementInput;
     public LayerMask groundLayerMask;
+    public bool isDashing = false;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -59,12 +61,14 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator SpeedBoostCoroutine(float speed, float duration)
     {
+        isDashing = true;
         moveSpeed += speed;
         Debug.Log("속도 증가! 현재 속도: " + moveSpeed);
         yield return new WaitForSeconds(duration);
 
         moveSpeed -= speed;
         Debug.Log("속도아이템의 효과가 종료되었습니다. 현재 속도: " + moveSpeed);
+        isDashing = false;
     }
     
 
@@ -98,6 +102,15 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started && IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started && isDashing == false)
+        {
+            CharacterManager.Instance.Player.condition.UseStamina(15);
+            StartCoroutine(SpeedBoostCoroutine(dashForce,3));
         }
     }
 
