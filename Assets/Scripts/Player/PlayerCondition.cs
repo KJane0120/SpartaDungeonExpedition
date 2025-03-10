@@ -1,7 +1,11 @@
 using System;
 using UnityEngine;
 
-public class PlayerCondition : MonoBehaviour
+public interface IDamageable
+{
+    void TakePhysicalDamage(int damage);
+}
+public class PlayerCondition : MonoBehaviour, IDamageable
 {
     public UICondition uiCondition;
 
@@ -12,6 +16,8 @@ public class PlayerCondition : MonoBehaviour
     Condition stamina { get { return uiCondition.stamina; } }
 
     public float noHungerHealthDecrease;
+
+    public event Action onTakeDamage;
 
     private void Start()
     {
@@ -57,5 +63,12 @@ public class PlayerCondition : MonoBehaviour
     {
         StartCoroutine(controller.SpeedBoostCoroutine(value, 10));
         //Invincibility의 경우 추후 추가 예정->데미지 로직 구현 후, 데미지 받는 부분에서 호출
+    }
+
+    public void TakePhysicalDamage(int damage)
+    {
+        health.Subtract(damage);
+        onTakeDamage?.Invoke();
+
     }
 }
