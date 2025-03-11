@@ -52,6 +52,11 @@ public class EquipTool : Equip
             {
                 resource.Gather(hit.point, hit.normal);
             }
+            if (doesDealDamage && hit.collider.TryGetComponent(out IDamageable damageable))
+            {
+                Debug.Log("몬스터 맞고 있음 :" + damage);
+                damageable.TakePhysicalDamage(damage);
+            }
         }
     }
 }

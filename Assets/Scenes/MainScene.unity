@@ -2155,6 +2155,7 @@ MonoBehaviour:
   maxWanderingDistance: 10
   minWanderWaitTime: 1
   maxWanderWaitTime: 2
+  safeDistance: 0
   damage: 5
   attackRate: 1.5
   attackDistance: 2
