@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,13 +15,11 @@ public class Interaction : MonoBehaviour
     public TextMeshProUGUI promptText;
     private Camera _camera;
 
-    // Start is called before the first frame update
     void Start()
     {
         _camera = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Time.time - lastCheckTime > checkRate)

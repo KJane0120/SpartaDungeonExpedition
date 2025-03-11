@@ -30,13 +30,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void FixedUpdate()//물리연산은 fixedupdate에서 해야함
     {
         Move();

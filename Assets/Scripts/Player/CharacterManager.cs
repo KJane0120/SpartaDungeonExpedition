@@ -37,8 +37,4 @@ public class CharacterManager : MonoBehaviour
             }
         }
     }
-
-
-
-
 }

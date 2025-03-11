@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -28,8 +26,6 @@ public class UIInventory : MonoBehaviour
 
     private int curEquipIndex;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         controller = CharacterManager.Instance.Player.controller;

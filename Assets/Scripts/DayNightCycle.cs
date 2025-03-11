@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour
@@ -9,7 +7,7 @@ public class DayNightCycle : MonoBehaviour
     public float fullDayLength;
     public float startTime = 0.4f;
     private float timeRate;
-    public Vector3 noon; //Vector 90 0 0 
+    public Vector3 noon;
 
     [Header("Sun")]
     public Light sun;
@@ -32,7 +30,6 @@ public class DayNightCycle : MonoBehaviour
         time = startTime;
     }
 
-    // Update is called once per frame
     void Update()
     {
         time = (time + timeRate * Time.deltaTime) % 1.0f;

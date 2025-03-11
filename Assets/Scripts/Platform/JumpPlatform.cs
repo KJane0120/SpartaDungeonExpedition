@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class JumpPlatform : MonoBehaviour
 {
-
     [SerializeField] private float jumpValue;
 
     private void OnCollisionEnter(Collision collision)
