@@ -7,7 +7,9 @@ public enum ItemType
     Consumable,
     Resource,
 }
-
+/// <summary>
+/// 현 단계에서 JumpCount, Invincibility에 해당하는 타입의 아이템은 없습니다. 
+/// </summary>
 public enum ConsumableType
 {
     Health,

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// NPC의 AI 상태를 정의하는 열거형
+/// </summary>
 public enum AIState
 {
     Idle,
@@ -10,50 +13,64 @@ public enum AIState
     Attacking,
     Fleeing
 }
+
+/// <summary>
+/// NPC 클래스는 AI 상태에 따라 행동하는 NPC를 정의합니다.
+/// </summary>
 public class NPC : MonoBehaviour, IDamageable
 {
     [Header("Stats")]
     public int health;
     public float walkSpeed;
     public float runSpeed;
-    public ItemData[] dropOnDeath;
+    public ItemData[] dropOnDeath; //죽었을 때 드롭 아이템
 
     [Header("AI")]
     private NavMeshAgent agent;
-    public float dectectDistance;
-    private AIState aiState;
+    public float dectectDistance; //플레이어를 감지하는 거리
+    private AIState aiState; //현재 AI 상태
 
     [Header("Wandering")]
-    public float minWanderingDistance;
-    public float maxWanderingDistance;
-    public float minWanderWaitTime;
-    public float maxWanderWaitTime;
-    public float safeDistance;
+    public float minWanderingDistance; //최소 방황 거리
+    public float maxWanderingDistance; //최대 방황 거리
+    public float minWanderWaitTime; //최소 방황 대기시간
+    public float maxWanderWaitTime; //최대 방황 대기시간
+    public float safeDistance; //안전 거리
 
     [Header("Combat")]
     public int damage;
     public float attackRate;
-    private float lastAttackTime;
+    private float lastAttackTime; //마지막 공격 시간
     public float attackDistance;
 
-    private float playerDistance;
+    private float playerDistance; //플레이어와의 거리
 
-    public float fieldOfView = 120f;
+    public float fieldOfView = 120f; //시야각
 
     private Animator animator;
     private SkinnedMeshRenderer[] meshRenderers;
 
+    /// <summary>
+    /// 컴포넌트를 초기화합니다.
+    /// </summary>
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
+
+    /// <summary>
+    /// 시작 시 AI 상태를 Wandering으로 설정합니다.
+    /// </summary>
     private void Start()
     {
         SetState(AIState.Wandering);
     }
 
+    /// <summary>
+    /// 매 프레임마다 AI 상태에 따라 행동을 업데이트합니다.
+    /// </summary>
     private void Update()
     {
         playerDistance = Vector3.Distance(transform.position, CharacterManager.Instance.Player.transform.position);
@@ -74,6 +91,11 @@ public class NPC : MonoBehaviour, IDamageable
                 break;
         }
     }
+
+    /// <summary>
+    /// AI 상태를 설정합니다.
+    /// </summary>
+    /// <param name="state">설정할 AI 상태</param>
     public void SetState(AIState state)
     {
         aiState = state;
@@ -101,6 +123,9 @@ public class NPC : MonoBehaviour, IDamageable
         animator.speed = agent.speed / walkSpeed;
     }
 
+    /// <summary>
+    /// Idle 또는 Wandering 상태에서의 행동을 업데이트합니다.
+    /// </summary>
     void PassiveUpdate()
     {
         if (aiState == AIState.Wandering && agent.remainingDistance < 0.1f)
@@ -115,6 +140,9 @@ public class NPC : MonoBehaviour, IDamageable
         }
     }
 
+    /// <summary>
+    /// 새로운 위치로 방황합니다.
+    /// </summary>
     void WanderToNewLocation()
     {
         if (aiState != AIState.Idle) return;
@@ -123,6 +151,10 @@ public class NPC : MonoBehaviour, IDamageable
         agent.SetDestination(GetWanderLocation());
     }
 
+    /// <summary>
+    /// 방황할 위치를 반환합니다.
+    /// </summary>
+    /// <returns>방황할 위치</returns>
     Vector3 GetWanderLocation()
     {
         NavMeshHit hit;
@@ -139,8 +171,11 @@ public class NPC : MonoBehaviour, IDamageable
         }
 
         return hit.position;
-
     }
+
+    /// <summary>
+    /// Attacking 상태에서의 행동을 업데이트합니다.
+    /// </summary>
     void AttackingUpdate()
     {
         if (playerDistance < attackDistance && IsPlayerInFieldOfView())
@@ -180,6 +215,9 @@ public class NPC : MonoBehaviour, IDamageable
         }
     }
 
+    /// <summary>
+    /// Fleeing 상태에서의 행동을 업데이트합니다.
+    /// </summary>
     void FleeingUpdate()
     {
         if (agent.remainingDistance < 0.1f)
@@ -192,6 +230,10 @@ public class NPC : MonoBehaviour, IDamageable
         }
     }
 
+    /// <summary>
+    /// 플레이어가 시야 내에 있는지 확인합니다.
+    /// </summary>
+    /// <returns>플레이어가 시야 내에 있는지 여부</returns>
     bool IsPlayerInFieldOfView()
     {
         Vector3 directionToPlayer = CharacterManager.Instance.Player.transform.position - transform.position;
@@ -199,6 +241,10 @@ public class NPC : MonoBehaviour, IDamageable
         return angle < fieldOfView * 0.5f;
     }
 
+    /// <summary>
+    /// 도망갈 위치를 반환합니다.
+    /// </summary>
+    /// <returns>도망갈 위치</returns>
     Vector3 GetFleeLocation()
     {
         NavMeshHit hit;
@@ -216,11 +262,20 @@ public class NPC : MonoBehaviour, IDamageable
         return hit.position;
     }
 
+    /// <summary>
+    /// 목표 위치와의 각도를 반환합니다.
+    /// </summary>
+    /// <param name="targetPos">목표 위치</param>
+    /// <returns>각도</returns>
     float GetDestinationAngle(Vector3 targetPos)
     {
         return Vector3.Angle(transform.position - CharacterManager.Instance.Player.transform.position, transform.position + targetPos);
     }
 
+    /// <summary>
+    /// 물리적 데미지를 받습니다.
+    /// </summary>
+    /// <param name="damage">받을 데미지 양</param>
     public void TakePhysicalDamage(int damage)
     {
         health -= damage;
@@ -228,10 +283,12 @@ public class NPC : MonoBehaviour, IDamageable
         {
             Die();
         }
-
         StartCoroutine(DamageFlash());
     }
 
+    /// <summary>
+    /// NPC가 죽었을 때 호출됩니다.
+    /// </summary>
     void Die()
     {
         for (int i = 0; i < dropOnDeath.Length; i++)
@@ -242,6 +299,10 @@ public class NPC : MonoBehaviour, IDamageable
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// 데미지를 받을 때 플래시 효과를 줍니다.
+    /// </summary>
+    /// <returns>코루틴</returns>
     IEnumerator DamageFlash()
     {
         for (int i = 0; i < meshRenderers.Length; i++)

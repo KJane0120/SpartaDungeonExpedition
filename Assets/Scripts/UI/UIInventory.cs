@@ -1,6 +1,9 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// UIInventory 클래스는 인벤토리 UI를 관리하고, 아이템의 추가, 선택, 사용, 장착 및 드롭 기능을 제공합니다.
+/// </summary>
 public class UIInventory : MonoBehaviour
 {
     public ItemSlot[] slots;
@@ -26,6 +29,9 @@ public class UIInventory : MonoBehaviour
 
     private int curEquipIndex;
 
+    /// <summary>
+    /// 시작 시 호출되는 함수로, 인벤토리와 관련된 초기 설정을 수행합니다.
+    /// </summary>
     void Start()
     {
         controller = CharacterManager.Instance.Player.controller;
@@ -49,6 +55,9 @@ public class UIInventory : MonoBehaviour
         ClearSelectedItemWindow();
     }
 
+    /// <summary>
+    /// 선택된 아이템 창을 초기화합니다.
+    /// </summary>
     void ClearSelectedItemWindow()
     {
         selectedItem = null;
@@ -63,6 +72,9 @@ public class UIInventory : MonoBehaviour
         dropButton.SetActive(false);
     }
 
+    /// <summary>
+    /// 인벤토리 창을 토글합니다.
+    /// </summary>
     public void Toggle()
     {
         if (IsOpen())
@@ -75,11 +87,18 @@ public class UIInventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 인벤토리 창이 열려 있는지 여부를 반환합니다.
+    /// </summary>
+    /// <returns>인벤토리 창이 열려 있는지 여부</returns>
     public bool IsOpen()
     {
         return inventoryWindow.activeInHierarchy;
     }
 
+    /// <summary>
+    /// 아이템을 인벤토리에 추가합니다.
+    /// </summary>
     public void AddItem()
     {
         ItemData data = CharacterManager.Instance.Player.itemData;
@@ -109,6 +128,10 @@ public class UIInventory : MonoBehaviour
         ThrowItem(data);
         CharacterManager.Instance.Player.itemData = null;
     }
+
+    /// <summary>
+    /// 인벤토리 UI를 업데이트합니다.
+    /// </summary>
     public void UpdateUI()
     {
         for (int i = 0; i < slots.Length; i++)
@@ -124,6 +147,11 @@ public class UIInventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 주어진 아이템 데이터와 일치하는 아이템 슬롯을 반환합니다.
+    /// </summary>
+    /// <param name="data">아이템 데이터</param>
+    /// <returns>일치하는 아이템 슬롯</returns>
     ItemSlot GetItemStack(ItemData data)
     {
         for (int i = 0; i < slots.Length; i++)
@@ -136,6 +164,10 @@ public class UIInventory : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 비어 있는 아이템 슬롯을 반환합니다.
+    /// </summary>
+    /// <returns>비어 있는 아이템 슬롯</returns>
     ItemSlot GetEmptySlot()
     {
         for (int i = 0; i < slots.Length; i++)
@@ -148,11 +180,21 @@ public class UIInventory : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 아이템을 랜덤한 드롭 위치에 생성합니다.
+    /// </summary>
+    /// <param name="data">아이템 데이터</param>
     void ThrowItem(ItemData data)
     {
         Instantiate(data.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360));
     }
 
+    /// <summary>
+    /// 주어진 인덱스의 아이템을 선택합니다.
+    /// 아이템타입에 따라 사용하기/장착 및 해제 버튼이 활성화됩니다.
+    /// 아이템타입에 관계없이 버리기 버튼은 항상 활성화됩니다.
+    /// </summary>
+    /// <param name="index">아이템 슬롯 인덱스</param>
     public void SelectItem(int index)
     {
         if (slots[index].item == null) return;
@@ -177,6 +219,9 @@ public class UIInventory : MonoBehaviour
         dropButton.SetActive(true);
     }
 
+    /// <summary>
+    /// 사용 버튼이 클릭되었을 때 호출되는 함수로, 선택된 아이템을 사용합니다.
+    /// </summary>
     public void OnUseButton()
     {
         if (selectedItem.type == ItemType.Consumable)
@@ -200,6 +245,9 @@ public class UIInventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 드롭 버튼이 클릭되었을 때 호출되는 함수로, 선택된 아이템을 드롭합니다.
+    /// </summary>
     public void OnDropButton()
     {
         if(CharacterManager.Instance.Player.equip.curEquip != null)
@@ -210,6 +258,9 @@ public class UIInventory : MonoBehaviour
         RemoveSelectedItem();
     }
 
+    /// <summary>
+    /// 선택된 아이템을 인벤토리에서 제거합니다.
+    /// </summary>
     void RemoveSelectedItem()
     {
         slots[selectedItemIndex].quantity--;
@@ -224,6 +275,9 @@ public class UIInventory : MonoBehaviour
         UpdateUI();
     }
 
+    /// <summary>
+    /// 장착 버튼이 클릭되었을 때 호출되는 함수로, 선택된 아이템을 장착합니다.
+    /// </summary>
     public void OnEquipButtion()
     {
         if (slots[curEquipIndex].equipped)
@@ -239,6 +293,10 @@ public class UIInventory : MonoBehaviour
         SelectItem(selectedItemIndex);
     }
 
+    /// <summary>
+    /// 주어진 인덱스의 아이템을 장착 해제합니다.
+    /// </summary>
+    /// <param name="index">아이템 슬롯 인덱스</param>
     void UnEquip(int index)
     {
         slots[index].equipped = false;
@@ -251,6 +309,9 @@ public class UIInventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 장착 해제 버튼이 클릭되었을 때 호출되는 함수로, 선택된 아이템을 장착 해제합니다.
+    /// </summary>
     public void OnUnEquipButton()
     {
         UnEquip(selectedItemIndex);
